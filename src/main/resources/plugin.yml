@@ -1,17 +1,17 @@
-name: SuggestionBlocker64
+name: CmdFilter64
 version: ${project.version}
 description: ${project.description}
 author: tbm00
-main: dev.tbm00.spigot.suggestionblocker64.SuggestionBlocker64
+main: dev.tbm00.spigot.cmdfilter64.CmdFilter64
 api-version: 1.17
 depend: []
 commands:
-  sugblock:
-    description: Main command for SuggestionBlocker64
+  cmdfilter:
+    description: Main command for CmdFilter64
 permissions:
-  suggestionblocker64.admin:
-    description: Ability to use the /sugblock command
+  cmdfilter64.admin:
+    description: Ability to use the /cmdfilter command
     default: op
-  suggestionblocker64.bypass:
+  cmdfilter64.bypass:
     description: Ability to bypass the suggestion filter
     default: op

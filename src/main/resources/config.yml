@@ -1,10 +1,10 @@
-# SuggestionBlocker64 v0.0.0-beta by @tbm00
-# https://github.com/tbm00/SuggestionBlocker64
+# CmdFilter64 v0.0.0-beta by @tbm00
+# https://github.com/tbm00/CmdFilter64
 
 enabled: true
 
 lang:
-  prefix: "&8[&fSugBlock&8] &7"
+  prefix: "&8[&fCmdFilter&8] &7"
 
 feature:
   enabled: true

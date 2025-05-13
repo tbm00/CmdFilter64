@@ -1,6 +1,6 @@
 
 
-package dev.tbm00.spigot.suggestionblocker64.command;
+package dev.tbm00.spigot.cmdfilter64.command;
 
 import java.util.List;
 import java.util.ArrayList;
@@ -15,17 +15,17 @@ import org.bukkit.entity.Player;
 
 import net.md_5.bungee.api.chat.TextComponent;
 
-import dev.tbm00.spigot.suggestionblocker64.ConfigHandler;
-import dev.tbm00.spigot.suggestionblocker64.SuggestionBlocker64;
-import dev.tbm00.spigot.suggestionblocker64.data.EntryManager;
+import dev.tbm00.spigot.cmdfilter64.ConfigHandler;
+import dev.tbm00.spigot.cmdfilter64.CmdFilter64;
+import dev.tbm00.spigot.cmdfilter64.data.EntryManager;
 
 public class AdminCommand implements TabExecutor {
-    private final SuggestionBlocker64 javaPlugin;
+    private final CmdFilter64 javaPlugin;
     private final ConfigHandler configHandler;
     private final EntryManager entryManager;
     private final String[] subCommands = new String[]{"sub"};
 
-    public AdminCommand(SuggestionBlocker64 javaPlugin, ConfigHandler configHandler, EntryManager entryManager) {
+    public AdminCommand(CmdFilter64 javaPlugin, ConfigHandler configHandler, EntryManager entryManager) {
         this.javaPlugin = javaPlugin;
         this.configHandler = configHandler;
         this.entryManager = entryManager;
@@ -98,7 +98,7 @@ public class AdminCommand implements TabExecutor {
      * @return true if the sender has the permission, false otherwise
      */
     private boolean hasPermission(CommandSender sender) {
-        return sender.hasPermission("suggestionblocker64.admin") || sender instanceof ConsoleCommandSender;
+        return sender.hasPermission("cmdfilter64.admin") || sender instanceof ConsoleCommandSender;
     }
 
     /**

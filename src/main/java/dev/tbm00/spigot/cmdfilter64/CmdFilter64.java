@@ -1,16 +1,16 @@
-package dev.tbm00.spigot.suggestionblocker64;
+package dev.tbm00.spigot.cmdfilter64;
 
 import org.bukkit.ChatColor;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import dev.tbm00.spigot.suggestionblocker64.command.AdminCommand;
-import dev.tbm00.spigot.suggestionblocker64.data.EntryManager;
-import dev.tbm00.spigot.suggestionblocker64.data.JSONHandler;
-import dev.tbm00.spigot.suggestionblocker64.listener.PlayerConnection;
+import dev.tbm00.spigot.cmdfilter64.command.AdminCommand;
+import dev.tbm00.spigot.cmdfilter64.data.EntryManager;
+import dev.tbm00.spigot.cmdfilter64.data.JSONHandler;
+import dev.tbm00.spigot.cmdfilter64.listener.PlayerConnection;
 
-public class SuggestionBlocker64 extends JavaPlugin {
+public class CmdFilter64 extends JavaPlugin {
     private ConfigHandler configHandler;
     private JSONHandler jsonHandler;
     private EntryManager entryManager;
@@ -47,7 +47,7 @@ public class SuggestionBlocker64 extends JavaPlugin {
                 getServer().getPluginManager().registerEvents(new PlayerConnection(configHandler), this);
                 
                 // Register Command
-                getCommand("sugblock").setExecutor(new AdminCommand(this, configHandler, entryManager));
+                getCommand("cmdfilter").setExecutor(new AdminCommand(this, configHandler, entryManager));
             }
                 
         } else {
@@ -107,7 +107,7 @@ public class SuggestionBlocker64 extends JavaPlugin {
      */
     @Override
     public void onDisable() {
-        log(ChatColor.RED, "SuggestionBlocker64 disabled..!");
+        log(ChatColor.RED, "CmdFilter64 disabled..!");
     }
 
     /**
@@ -118,7 +118,7 @@ public class SuggestionBlocker64 extends JavaPlugin {
      */
     public void log(ChatColor chatColor, String... strings) {
 		for (String s : strings)
-            getServer().getConsoleSender().sendMessage("[SuggestionBlocker64] " + chatColor + s);
+            getServer().getConsoleSender().sendMessage("[CmdFilter64] " + chatColor + s);
 	}
 
     public JSONHandler getDatabase() {

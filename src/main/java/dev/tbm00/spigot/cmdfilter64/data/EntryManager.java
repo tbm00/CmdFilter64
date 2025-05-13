@@ -1,4 +1,4 @@
-package dev.tbm00.spigot.suggestionblocker64.data;
+package dev.tbm00.spigot.cmdfilter64.data;
 
 import java.util.Set;
 import java.util.HashSet;

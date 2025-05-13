@@ -1,10 +1,10 @@
-package dev.tbm00.spigot.suggestionblocker64;
+package dev.tbm00.spigot.cmdfilter64;
 
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.ConfigurationSection;
 
 public class ConfigHandler {
-    private final SuggestionBlocker64 javaPlugin;
+    private final CmdFilter64 javaPlugin;
     private String chatPrefix;
     private boolean featureEnabled = false;
 
@@ -13,7 +13,7 @@ public class ConfigHandler {
      *
      * @param javaPlugin the main plugin instance
      */
-    public ConfigHandler(SuggestionBlocker64 javaPlugin) {
+    public ConfigHandler(CmdFilter64 javaPlugin) {
         this.javaPlugin = javaPlugin;
         try {
             loadLanguageSection();
