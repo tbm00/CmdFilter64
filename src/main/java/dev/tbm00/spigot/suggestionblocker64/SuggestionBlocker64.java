@@ -1,26 +1,26 @@
-package dev.tbm00.spigot.blankplugin;
+package dev.tbm00.spigot.suggestionblocker64;
 
 import org.bukkit.ChatColor;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import dev.tbm00.spigot.blankplugin.command.BlankCommand;
-import dev.tbm00.spigot.blankplugin.listener.PlayerConnection;
+import dev.tbm00.spigot.suggestionblocker64.command.BlankCommand;
+import dev.tbm00.spigot.suggestionblocker64.listener.PlayerConnection;
 
-public class BlankPlugin extends JavaPlugin {
+public class SuggestionBlocker64 extends JavaPlugin {
     private ConfigHandler configHandler;
 
     @Override
     public void onEnable() {
         saveDefaultConfig();
         final PluginDescriptionFile pdf = this.getDescription();
-
-		log(ChatColor.LIGHT_PURPLE,
+        
+        log(ChatColor.LIGHT_PURPLE,
             ChatColor.DARK_PURPLE + "-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-",
             pdf.getName() + " v" + pdf.getVersion() + " created by tbm00",
-            ChatColor.DARK_PURPLE + "-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-"
-		);
+            ChatColor.DARK_PURPLE + "-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-");
+
 
         if (getConfig().contains("enabled") && getConfig().getBoolean("enabled")) {
             configHandler = new ConfigHandler(this);
@@ -88,7 +88,7 @@ public class BlankPlugin extends JavaPlugin {
      */
     @Override
     public void onDisable() {
-        log(ChatColor.RED, "BlankPlugin disabled..!");
+        log(ChatColor.RED, "SuggestionBlocker64 disabled..!");
     }
 
     /**
@@ -99,7 +99,7 @@ public class BlankPlugin extends JavaPlugin {
      */
     public void log(ChatColor chatColor, String... strings) {
 		for (String s : strings)
-            getServer().getConsoleSender().sendMessage("[BlankPlugin] " + chatColor + s);
+            getServer().getConsoleSender().sendMessage("[SuggestionBlocker64] " + chatColor + s);
 	}
 
 }

@@ -1,4 +1,4 @@
-# BlankPlugin
+# SuggestionBlocker64
 A spigot plugin that does nothing.
 
 Created by tbm00 for play.mc64.wtf.
@@ -23,8 +23,8 @@ Created by tbm00 for play.mc64.wtf.
 - none *(default: everyone)*
 
 #### Admin Permissions
-- `blankplugin.blank.base` Ability to use the /blank base-command *(default: op)*
-- `blankplugin.blank.sub` Ability to use the /blank sub-command *(default: op)*
+- `suggestionblocker64.blank.base` Ability to use the /blank base-command *(default: op)*
+- `suggestionblocker64.blank.sub` Ability to use the /blank sub-command *(default: op)*
 
 
 ## Config

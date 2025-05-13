@@ -1,6 +1,6 @@
 
 
-package dev.tbm00.spigot.blankplugin.command;
+package dev.tbm00.spigot.suggestionblocker64.command;
 
 import java.util.List;
 import java.util.ArrayList;
@@ -13,16 +13,16 @@ import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.command.TabExecutor;
 import org.bukkit.entity.Player;
 
-import dev.tbm00.spigot.blankplugin.BlankPlugin;
-import dev.tbm00.spigot.blankplugin.ConfigHandler;
+import dev.tbm00.spigot.suggestionblocker64.ConfigHandler;
+import dev.tbm00.spigot.suggestionblocker64.SuggestionBlocker64;
 import net.md_5.bungee.api.chat.TextComponent;
 
 public class BlankCommand implements TabExecutor {
-    private final BlankPlugin javaPlugin;
+    private final SuggestionBlocker64 javaPlugin;
     private final ConfigHandler configHandler;
     private final String[] subCommands = new String[]{"sub"};
 
-    public BlankCommand(BlankPlugin javaPlugin, ConfigHandler configHandler) {
+    public BlankCommand(SuggestionBlocker64 javaPlugin, ConfigHandler configHandler) {
         this.javaPlugin = javaPlugin;
         this.configHandler = configHandler;
     }
@@ -57,7 +57,7 @@ public class BlankCommand implements TabExecutor {
      * @return true if command was processed successfully, false otherwise
      */
     private boolean handleBaseCommand(CommandSender sender) {
-        if (hasPermission(sender, "blankplugin.blank.base")) {
+        if (hasPermission(sender, "suggestionblocker64.blank.base")) {
             sendMessage(sender, ChatColor.RED + "No permission!");
             return true;
         }
@@ -74,7 +74,7 @@ public class BlankCommand implements TabExecutor {
      * @return true if command was processed successfully, false otherwise
      */
     private boolean handleSubCommand(CommandSender sender, String[] args) {
-        if (hasPermission(sender, "blankplugin.blank.sub")) {
+        if (hasPermission(sender, "suggestionblocker64.blank.sub")) {
             sendMessage(sender, ChatColor.RED + "No permission!");
             return true;
         }

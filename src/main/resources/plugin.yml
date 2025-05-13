@@ -1,17 +1,17 @@
-name: BlankPlugin
+name: SuggestionBlocker64
 version: ${project.version}
 description: ${project.description}
 author: tbm00
-main: dev.tbm00.spigot.blankplugin.BlankPlugin
+main: dev.tbm00.spigot.suggestionblocker64.SuggestionBlocker64
 api-version: 1.17
 depend: []
 commands:
   blank:
-    description: Main command for BlankPlugin
+    description: Main command for SuggestionBlocker64
 permissions:
-  blankplugin.blank.base:
+  suggestionblocker64.blank.base:
     description: Ability to use the /blank base-command
     default: op
-  blankplugin.blank.sub:
+  suggestionblocker64.blank.sub:
     description: Ability to use the /blank sub-command
     default: op

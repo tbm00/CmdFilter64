@@ -1,4 +1,4 @@
-package dev.tbm00.spigot.blankplugin.listener;
+package dev.tbm00.spigot.suggestionblocker64.listener;
 
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -6,7 +6,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 
-import dev.tbm00.spigot.blankplugin.ConfigHandler;
+import dev.tbm00.spigot.suggestionblocker64.ConfigHandler;
 
 public class PlayerConnection implements Listener {
     private final ConfigHandler configHandler;
