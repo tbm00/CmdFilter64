@@ -1,0 +1,17 @@
+name: BlankPlugin
+version: ${project.version}
+description: ${project.description}
+author: tbm00
+main: dev.tbm00.spigot.blankplugin.BlankPlugin
+api-version: 1.17
+depend: []
+commands:
+  blank:
+    description: Main command for BlankPlugin
+permissions:
+  blankplugin.blank.base:
+    description: Ability to use the /blank base-command
+    default: op
+  blankplugin.blank.sub:
+    description: Ability to use the /blank sub-command
+    default: op

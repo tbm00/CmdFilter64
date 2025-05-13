@@ -1,0 +1,10 @@
+# BlankPlugin v0.0.0-beta by @tbm00
+# https://github.com/tbm00/BlankPlugin
+
+enabled: true
+
+lang:
+  prefix: "&8[&fBlank&8] &7"
+
+feature:
+  enabled: true
