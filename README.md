@@ -5,7 +5,7 @@ Created by tbm00 for play.mc64.wtf.
 
 ## Features
 - Filter specific commands.
-- Filter all commands prefixed with a plugin name, i.e., it contains ":".
+- Filter all commands prefixed with a plugin name, i.e., it contains `:` or ` `.
 
 ## Dependencies
 - **Java 17+**: REQUIRED
@@ -41,5 +41,6 @@ lang:
   prefix: "&8[&fCmdFilter&8] &7"
 
 features:
-  blockPluginPrefixedCommands: true
+  blacklistPluginPrefixedCommands: true
+  blacklistSpacedCommands: true
 ```
