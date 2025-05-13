@@ -13,18 +13,22 @@ import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.command.TabExecutor;
 import org.bukkit.entity.Player;
 
-import dev.tbm00.spigot.suggestionblocker64.ConfigHandler;
-import dev.tbm00.spigot.suggestionblocker64.SuggestionBlocker64;
 import net.md_5.bungee.api.chat.TextComponent;
 
-public class BlankCommand implements TabExecutor {
+import dev.tbm00.spigot.suggestionblocker64.ConfigHandler;
+import dev.tbm00.spigot.suggestionblocker64.SuggestionBlocker64;
+import dev.tbm00.spigot.suggestionblocker64.data.EntryManager;
+
+public class AdminCommand implements TabExecutor {
     private final SuggestionBlocker64 javaPlugin;
     private final ConfigHandler configHandler;
+    private final EntryManager entryManager;
     private final String[] subCommands = new String[]{"sub"};
 
-    public BlankCommand(SuggestionBlocker64 javaPlugin, ConfigHandler configHandler) {
+    public AdminCommand(SuggestionBlocker64 javaPlugin, ConfigHandler configHandler, EntryManager entryManager) {
         this.javaPlugin = javaPlugin;
         this.configHandler = configHandler;
+        this.entryManager = entryManager;
     }
 
     /**
@@ -38,6 +42,8 @@ public class BlankCommand implements TabExecutor {
      */
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+        if (!hasPermission(sender)) return true;
+
         if (args.length == 0) return handleBaseCommand(sender);
 
         String subCommand = args[0].toLowerCase();
@@ -57,10 +63,6 @@ public class BlankCommand implements TabExecutor {
      * @return true if command was processed successfully, false otherwise
      */
     private boolean handleBaseCommand(CommandSender sender) {
-        if (hasPermission(sender, "suggestionblocker64.blank.base")) {
-            sendMessage(sender, ChatColor.RED + "No permission!");
-            return true;
-        }
 
         // do something
         return true;
@@ -74,10 +76,6 @@ public class BlankCommand implements TabExecutor {
      * @return true if command was processed successfully, false otherwise
      */
     private boolean handleSubCommand(CommandSender sender, String[] args) {
-        if (hasPermission(sender, "suggestionblocker64.blank.sub")) {
-            sendMessage(sender, ChatColor.RED + "No permission!");
-            return true;
-        }
 
         // do something
         return true;
@@ -97,11 +95,10 @@ public class BlankCommand implements TabExecutor {
      * Checks if the sender has a specific permission.
      * 
      * @param sender the command sender
-     * @param perm the permission string
      * @return true if the sender has the permission, false otherwise
      */
-    private boolean hasPermission(CommandSender sender, String perm) {
-        return sender.hasPermission(perm) || sender instanceof ConsoleCommandSender;
+    private boolean hasPermission(CommandSender sender) {
+        return sender.hasPermission("suggestionblocker64.admin") || sender instanceof ConsoleCommandSender;
     }
 
     /**
@@ -118,6 +115,8 @@ public class BlankCommand implements TabExecutor {
     @Override
     public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
         List<String> list = new ArrayList<>();
+        if (!hasPermission(sender)) return list;
+
         if (args.length == 1) {
             list.clear();
             for (String n : subCommands) {

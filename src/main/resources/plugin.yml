@@ -6,12 +6,12 @@ main: dev.tbm00.spigot.suggestionblocker64.SuggestionBlocker64
 api-version: 1.17
 depend: []
 commands:
-  blank:
+  sugblock:
     description: Main command for SuggestionBlocker64
 permissions:
-  suggestionblocker64.blank.base:
-    description: Ability to use the /blank base-command
+  suggestionblocker64.admin:
+    description: Ability to use the /sugblock command
     default: op
-  suggestionblocker64.blank.sub:
-    description: Ability to use the /blank sub-command
+  suggestionblocker64.bypass:
+    description: Ability to bypass the suggestion filter
     default: op

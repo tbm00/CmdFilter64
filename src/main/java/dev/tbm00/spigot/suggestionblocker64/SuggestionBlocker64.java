@@ -5,11 +5,15 @@ import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import dev.tbm00.spigot.suggestionblocker64.command.BlankCommand;
+import dev.tbm00.spigot.suggestionblocker64.command.AdminCommand;
+import dev.tbm00.spigot.suggestionblocker64.data.EntryManager;
+import dev.tbm00.spigot.suggestionblocker64.data.JSONHandler;
 import dev.tbm00.spigot.suggestionblocker64.listener.PlayerConnection;
 
 public class SuggestionBlocker64 extends JavaPlugin {
     private ConfigHandler configHandler;
+    private JSONHandler jsonHandler;
+    private EntryManager entryManager;
 
     @Override
     public void onEnable() {
@@ -21,6 +25,17 @@ public class SuggestionBlocker64 extends JavaPlugin {
             pdf.getName() + " v" + pdf.getVersion() + " created by tbm00",
             ChatColor.DARK_PURPLE + "-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-");
 
+        // Connect to JSON
+        try {
+            jsonHandler = new JSONHandler(this);
+        } catch (Exception e) {
+            getLogger().severe("Failed to connect to JSON. Disabling plugin.");
+            getServer().getPluginManager().disablePlugin(this);
+            return;
+        }
+
+        // Connect EntryManager
+        entryManager = new EntryManager(this, jsonHandler);
 
         if (getConfig().contains("enabled") && getConfig().getBoolean("enabled")) {
             configHandler = new ConfigHandler(this);
@@ -32,9 +47,13 @@ public class SuggestionBlocker64 extends JavaPlugin {
                 getServer().getPluginManager().registerEvents(new PlayerConnection(configHandler), this);
                 
                 // Register Command
-                getCommand("blank").setExecutor(new BlankCommand(this, configHandler));
+                getCommand("sugblock").setExecutor(new AdminCommand(this, configHandler, entryManager));
             }
                 
+        } else {
+            getLogger().severe("Disabled in config...");
+            getServer().getPluginManager().disablePlugin(this);
+            return;
         }
     }
 
@@ -102,4 +121,7 @@ public class SuggestionBlocker64 extends JavaPlugin {
             getServer().getConsoleSender().sendMessage("[SuggestionBlocker64] " + chatColor + s);
 	}
 
+    public JSONHandler getDatabase() {
+        return jsonHandler;
+    }
 }

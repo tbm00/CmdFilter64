@@ -4,7 +4,7 @@
 enabled: true
 
 lang:
-  prefix: "&8[&fBlank&8] &7"
+  prefix: "&8[&fSugBlock&8] &7"
 
 feature:
   enabled: true
