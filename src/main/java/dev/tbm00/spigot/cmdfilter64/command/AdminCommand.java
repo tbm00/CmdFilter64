@@ -3,27 +3,26 @@
 package dev.tbm00.spigot.cmdfilter64.command;
 
 import java.util.List;
+import java.util.Set;
 import java.util.ArrayList;
 
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.command.TabExecutor;
-import org.bukkit.entity.Player;
 
 import net.md_5.bungee.api.chat.TextComponent;
 
-import dev.tbm00.spigot.cmdfilter64.ConfigHandler;
 import dev.tbm00.spigot.cmdfilter64.CmdFilter64;
+import dev.tbm00.spigot.cmdfilter64.data.ConfigHandler;
 import dev.tbm00.spigot.cmdfilter64.data.EntryManager;
 
 public class AdminCommand implements TabExecutor {
     private final CmdFilter64 javaPlugin;
     private final ConfigHandler configHandler;
     private final EntryManager entryManager;
-    private final String[] subCommands = new String[]{"sub"};
+    private final String[] SUBCOMMANDS = new String[]{"add", "remove", "check", "list"};
 
     public AdminCommand(CmdFilter64 javaPlugin, ConfigHandler configHandler, EntryManager entryManager) {
         this.javaPlugin = javaPlugin;
@@ -44,51 +43,80 @@ public class AdminCommand implements TabExecutor {
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (!hasPermission(sender)) return true;
 
-        if (args.length == 0) return handleBaseCommand(sender);
+        if (args.length == 0) return true;
 
         String subCommand = args[0].toLowerCase();
         switch (subCommand) {
-            case "sub":
-                return handleSubCommand(sender, args);
+            case "add":
+                return handleAddCommand(sender, args);
+            case "remove":
+                return handleRemoveCommand(sender, args);
+            case "check":
+                return handleCheckCommand(sender, args);
+            case "list":
+                return handleListCommand(sender);
             default:
                 sendMessage(sender, ChatColor.RED + "Unknown subcommand!");
                 return false;
         }
     }
 
-    /**
-     * Handles the base command for __.
-     * 
-     * @param sender the command sender
-     * @return true if command was processed successfully, false otherwise
-     */
-    private boolean handleBaseCommand(CommandSender sender) {
+    private boolean handleAddCommand(CommandSender sender, String[] args) {
+        if (args.length!=2) {
+            sendMessage(sender, "Usage: /cmdfilter remove <string>");
+            return true;
+        }
 
-        // do something
+        String cmd = args[1].toLowerCase();
+        if (!entryManager.entryExists(cmd)) {
+            entryManager.saveEntry(cmd);
+            sendMessage(sender, "Added '" + cmd + "' to the blacklist!");
+        } else {
+            sendMessage(sender, "'" + cmd + "' already exists in the blacklist!");
+        }
+
         return true;
     }
 
-    /**
-     * Handles the sub command for __.
-     * 
-     * @param sender the command sender
-     * @param args the arguments passed to the command
-     * @return true if command was processed successfully, false otherwise
-     */
-    private boolean handleSubCommand(CommandSender sender, String[] args) {
+    private boolean handleRemoveCommand(CommandSender sender, String[] args) {
+        if (args.length!=2) {
+            sendMessage(sender, "Usage: /cmdfilter remove <string>");
+            return true;
+        }
 
-        // do something
+        String cmd = args[1].toLowerCase();
+        if (entryManager.entryExists(cmd)) {
+            entryManager.deleteEntry(cmd);
+            sendMessage(sender, "Removed '" + cmd + "' from the blacklist!");
+        } else {
+            sendMessage(sender, "'" + cmd + "' doesn't exist in the blacklist!");
+        }
+
         return true;
     }
-    
-    /**
-     * Retrieves a player by their name.
-     * 
-     * @param arg the name of the player to retrieve
-     * @return the Player object, or null if not found
-     */
-    private Player getPlayer(String arg) {
-        return javaPlugin.getServer().getPlayer(arg);
+
+    private boolean handleCheckCommand(CommandSender sender, String[] args) {
+        if (args.length!=2) {
+            sendMessage(sender, "Usage: /cmdfilter check <string>");
+            return true;
+        }
+
+        String cmd = args[1].toLowerCase();
+        if (entryManager.entryExists(cmd)) {
+            sendMessage(sender, "'" + cmd + "' exists in the blacklist!");
+        } else {
+            sendMessage(sender, "'" + cmd + "' doesn't exist in the blacklist!");
+        }
+        
+        return true;
+    }
+
+    private boolean handleListCommand(CommandSender sender) {
+        Set<String> cmds = entryManager.getEntries();
+        for (String cmd : cmds) {
+            sender.sendMessage(cmd);
+        }
+        return true;
     }
 
     /**
@@ -98,7 +126,7 @@ public class AdminCommand implements TabExecutor {
      * @return true if the sender has the permission, false otherwise
      */
     private boolean hasPermission(CommandSender sender) {
-        return sender.hasPermission("cmdfilter64.admin") || sender instanceof ConsoleCommandSender;
+        return sender.hasPermission(javaPlugin.ADMIN_PERM) || sender instanceof ConsoleCommandSender;
     }
 
     /**
@@ -119,12 +147,10 @@ public class AdminCommand implements TabExecutor {
 
         if (args.length == 1) {
             list.clear();
-            for (String n : subCommands) {
+            for (String n : SUBCOMMANDS) {
                 if (n!=null && n.startsWith(args[0])) 
                     list.add(n);
             }
-        } else if (args.length == 2) {
-            Bukkit.getOnlinePlayers().forEach(player -> list.add(player.getName()));
         }
         return list;
     }

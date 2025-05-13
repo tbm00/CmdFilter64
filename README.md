@@ -1,10 +1,11 @@
 # CmdFilter64
-A spigot plugin that does nothing.
+A spigot plugin that filters Java command suggestions with a blacklist.
 
 Created by tbm00 for play.mc64.wtf.
 
 ## Features
-- none
+- Filter specific commands.
+- Filter all commands prefixed with a plugin name, i.e., it contains ":".
 
 ## Dependencies
 - **Java 17+**: REQUIRED
@@ -15,18 +16,30 @@ Created by tbm00 for play.mc64.wtf.
 - none
 
 #### Admin Commands
-- `/blank` Base-command
-- `/blank sub` Sub-command
+- `/cmdfilter add <cmd>`
+- `/cmdfilter remove <cmd>`
+- `/cmdfilter check <cmd>`
+- `/cmdfilter list`
 
 ## Permissions
 #### Player Permissions
 - none *(default: everyone)*
 
 #### Admin Permissions
-- `cmdfilter64.blank.base` Ability to use the /blank base-command *(default: op)*
-- `cmdfilter64.blank.sub` Ability to use the /blank sub-command *(default: op)*
+- `cmdfilter64.bypass` Ability to bypass the suggestion blacklist *(default: op)*
+- `cmdfilter64.admin` Ability to use the /cmdfilter admin command *(default: op)*
 
 
 ## Config
 ```
+# CmdFilter64 v0.0.0-beta by @tbm00
+# https://github.com/tbm00/CmdFilter64
+
+enabled: true
+
+lang:
+  prefix: "&8[&fCmdFilter&8] &7"
+
+features:
+  blockPluginPrefixedCommands: true
 ```

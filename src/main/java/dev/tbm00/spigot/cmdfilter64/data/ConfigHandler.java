@@ -1,12 +1,15 @@
-package dev.tbm00.spigot.cmdfilter64;
+package dev.tbm00.spigot.cmdfilter64.data;
 
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.ConfigurationSection;
 
+import dev.tbm00.spigot.cmdfilter64.CmdFilter64;
+
 public class ConfigHandler {
     private final CmdFilter64 javaPlugin;
     private String chatPrefix;
-    private boolean featureEnabled = false;
+    private boolean prefixedBlocked = false;
+    private boolean spacingBlocked = false;
 
     /**
      * Constructs a ConfigHandler instance.
@@ -34,19 +37,25 @@ public class ConfigHandler {
     }
 
     /**
-     * Loads the "feature" section of the configuration.
+     * Loads the "features" section of the configuration.
      */
     private void loadFeatureSection() {
-        ConfigurationSection section = javaPlugin.getConfig().getConfigurationSection("feature");
-        if (section!=null)
-            featureEnabled = section.contains("enabled") ? section.getBoolean("enabled") : false;
+        ConfigurationSection section = javaPlugin.getConfig().getConfigurationSection("features");
+        if (section!=null) {
+            prefixedBlocked = section.contains("blacklistPluginPrefixedCommands") ? section.getBoolean("blacklistPluginPrefixedCommands") : false;
+            spacingBlocked = section.contains("blacklistSpacedCommands") ? section.getBoolean("blacklistSpacedCommands") : false;
+        }
     }
 
     public String getChatPrefix() {
         return chatPrefix;
     }
 
-    public boolean isFeatureEnabled() {
-        return featureEnabled;
+    public boolean isPrefixedBlocked() {
+        return prefixedBlocked;
+    }
+
+    public boolean isSpacingBlocked() {
+        return spacingBlocked;
     }
 }

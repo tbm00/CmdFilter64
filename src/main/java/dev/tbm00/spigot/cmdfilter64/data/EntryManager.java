@@ -42,6 +42,11 @@ public class EntryManager {
         }
     }
 
+    // get string entries from map
+    public Set<String> getEntries() {
+        return entries;
+    }
+
     private void saveEntriesAsync() {
         Set<String> snapshot;
         synchronized (entries) {

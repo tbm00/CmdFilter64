@@ -10,8 +10,8 @@ commands:
     description: Main command for CmdFilter64
 permissions:
   cmdfilter64.admin:
-    description: Ability to use the /cmdfilter command
+    description: Ability to use the /cmdfilter admin command
     default: op
   cmdfilter64.bypass:
-    description: Ability to bypass the suggestion filter
+    description: Ability to bypass the suggestion blacklist
     default: op

@@ -1,19 +1,22 @@
 package dev.tbm00.spigot.cmdfilter64;
 
 import org.bukkit.ChatColor;
-import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import dev.tbm00.spigot.cmdfilter64.command.AdminCommand;
+import dev.tbm00.spigot.cmdfilter64.data.ConfigHandler;
 import dev.tbm00.spigot.cmdfilter64.data.EntryManager;
 import dev.tbm00.spigot.cmdfilter64.data.JSONHandler;
-import dev.tbm00.spigot.cmdfilter64.listener.PlayerConnection;
+import dev.tbm00.spigot.cmdfilter64.listener.CommandInput;
 
 public class CmdFilter64 extends JavaPlugin {
     private ConfigHandler configHandler;
     private JSONHandler jsonHandler;
     private EntryManager entryManager;
+
+    public final String ADMIN_PERM = "cmdfilter64.admin";
+    public final String BYPASS_PERM = "cmdfilter64.bypass";
 
     @Override
     public void onEnable() {
@@ -25,7 +28,6 @@ public class CmdFilter64 extends JavaPlugin {
             pdf.getName() + " v" + pdf.getVersion() + " created by tbm00",
             ChatColor.DARK_PURPLE + "-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-");
 
-        // Connect to JSON
         try {
             jsonHandler = new JSONHandler(this);
         } catch (Exception e) {
@@ -34,22 +36,12 @@ public class CmdFilter64 extends JavaPlugin {
             return;
         }
 
-        // Connect EntryManager
         entryManager = new EntryManager(this, jsonHandler);
 
         if (getConfig().contains("enabled") && getConfig().getBoolean("enabled")) {
             configHandler = new ConfigHandler(this);
-                
-            setupHooks();
-
-            if (configHandler.isFeatureEnabled()) {
-                // Register Listener
-                getServer().getPluginManager().registerEvents(new PlayerConnection(configHandler), this);
-                
-                // Register Command
-                getCommand("cmdfilter").setExecutor(new AdminCommand(this, configHandler, entryManager));
-            }
-                
+            getServer().getPluginManager().registerEvents(new CommandInput(this, configHandler, entryManager), this);
+            getCommand("cmdfilter").setExecutor(new AdminCommand(this, configHandler, entryManager));
         } else {
             getLogger().severe("Disabled in config...");
             getServer().getPluginManager().disablePlugin(this);
@@ -58,55 +50,11 @@ public class CmdFilter64 extends JavaPlugin {
     }
 
     /**
-     * Sets up the required hooks for plugin integration.
-     * Disables the plugin if any required hook fails.
-     */
-    private void setupHooks() {
-        if (!setupBlankHook()) {
-            getLogger().severe("BlankHook failed -- disabling plugin!");
-            disablePlugin();
-            return;
-        }
-    }
-
-    /**
-     * Attempts to hook into the BlankHook plugin.
-     *
-     * @return true if the hook was successful, false otherwise.
-     */
-    private boolean setupBlankHook() {
-        //if (getServer().getPluginManager().getPlugin("BlankHook")==null) return false;
-
-        //BlankHook = new BlankHook();
-        
-        log(ChatColor.GREEN, "BlankHook hooked.");
-        return true;
-    }
-
-    /**
-     * Checks if the specified plugin is available and enabled on the server.
-     *
-     * @param pluginName the name of the plugin to check
-     * @return true if the plugin is available and enabled, false otherwise.
-     */
-    private boolean isPluginAvailable(String pluginName) {
-		final Plugin plugin = getServer().getPluginManager().getPlugin(pluginName);
-		return plugin != null && plugin.isEnabled();
-	}
-
-
-    /**
-     * Disables the plugin.
-     */
-    private void disablePlugin() {
-        getServer().getPluginManager().disablePlugin(this);
-    }
-
-    /**
      * Called when the plugin is disabled.
      */
     @Override
     public void onDisable() {
+        entryManager.close();
         log(ChatColor.RED, "CmdFilter64 disabled..!");
     }
 
@@ -120,8 +68,4 @@ public class CmdFilter64 extends JavaPlugin {
 		for (String s : strings)
             getServer().getConsoleSender().sendMessage("[CmdFilter64] " + chatColor + s);
 	}
-
-    public JSONHandler getDatabase() {
-        return jsonHandler;
-    }
 }
