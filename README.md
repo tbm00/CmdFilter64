@@ -32,7 +32,7 @@ Created by tbm00 for play.mc64.wtf.
 
 ## Config
 ```
-# CmdFilter64 v0.0.0-beta by @tbm00
+# CmdFilter64 v0.1.0-beta by @tbm00
 # https://github.com/tbm00/CmdFilter64
 
 enabled: true
