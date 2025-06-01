@@ -11,7 +11,7 @@
 
     <name>CmdFilter64</name>
 
-    <description>This filters Java command suggestions with a blacklist</description>
+    <description>This filters Java and Bedrock command suggestions with a blacklist</description>
     <properties>
         <java.version>17</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

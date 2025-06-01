@@ -1,5 +1,5 @@
 # CmdFilter64
-A spigot plugin that filters Java command suggestions with a blacklist.
+A spigot plugin that filters Java & Bedrock command suggestions with a blacklist.
 
 Created by tbm00 for play.mc64.wtf.
 
